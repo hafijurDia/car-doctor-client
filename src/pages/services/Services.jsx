@@ -1,10 +1,9 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import ServiceCard from "./ServiceCard";
+import { useEffect, useState } from "react";
+import ServiceCard from "../home/service/ServiceCard";
 
 
 
-const Service = () => {
+const Services = () => {
     const [services, setService] = useState([]);
 
     useEffect(()=>{
@@ -13,10 +12,10 @@ const Service = () => {
         .then(data => setService(data))
     },[])
     return (
-        <div className="p-4 md:p-0">
-            <div className="space-y-1">
-            <h3 className="text-2xl font-bold text-error text-center">Service</h3>
-          <h1 className="text-5xl font-bold leading-tight text-center">Our Service Area</h1>
+        <div className="max-w-6xl mx-auto">
+            <div className="p-4 md:p-0">
+            <div className="space-y-1 mt-10">
+          <h1 className="text-3xl md:text-5xl font-bold leading-tight text-center">Our Service Area</h1>
           <p className="text-base text-gray-600 text-center md:w-3/4 lg:w-3/4 mx-auto">
           the majority have suffered alteration in some form, by injected humour, or randomised words which don&apos;t look even slightly believable.</p>
         </div>
@@ -32,13 +31,14 @@ const Service = () => {
             <button className="btn btn-outline btn-error text-white text-lg">More Services</button>
            </div>
         </div>
+        </div>
     );
 };
 
 
-Service.propTypes = {
+Services.propTypes = {
 
 };
 
 
-export default Service;
+export default Services;
