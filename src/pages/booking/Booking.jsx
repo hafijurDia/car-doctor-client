@@ -1,11 +1,17 @@
-import { useContext } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const Booking = () => {
   const service = useLoaderData();
   const { user } = useContext(AuthContext);
   const { _id, title, price, img } = service;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleConfirmedOrder = async (event) => {
     event.preventDefault();
@@ -33,14 +39,32 @@ const Booking = () => {
 
       if (response.ok) {
         const result = await response.json();
-        alert("Booking confirmed!");
+        
+        // Show SweetAlert success message
+        Swal.fire({
+          title: "Success!",
+          text: "Booking confirmed!",
+          icon: "success",
+          confirmButtonText: "OK",
+        }).then(() => {
+          // Redirect to the services page after clicking "OK"
+          navigate("/services");
+        });
+
         form.reset(); // Optionally clear the form after submission
       } else {
         throw new Error("Failed to confirm booking");
       }
     } catch (error) {
       console.error("Error confirming booking:", error);
-      alert("Something went wrong. Please try again.");
+      
+      // Show SweetAlert error message
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong. Please try again.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     }
   };
 
@@ -103,6 +127,7 @@ const Booking = () => {
                   type="email"
                   name="email"
                   defaultValue={user?.email}
+                  readOnly
                   className="bg-white rounded-lg py-2 px-4 focus:outline-none w-full"
                   required
                 />
@@ -112,6 +137,7 @@ const Booking = () => {
                   type="text"
                   name="price"
                   defaultValue={price}
+                  readOnly
                   className="bg-white rounded-lg py-2 px-4 focus:outline-none w-full"
                   required
                 />

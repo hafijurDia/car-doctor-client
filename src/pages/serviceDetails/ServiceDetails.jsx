@@ -1,12 +1,17 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { useEffect } from "react";
 
 const ServiceDetails = () => {
   // Use useLoaderData to get the service data from the loader
   const { service, allServices } = useLoaderData();
   const facilities = service.facility;
+  const location = useLocation();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-16">
      <div className="relative rounded-md">
@@ -23,7 +28,8 @@ const ServiceDetails = () => {
       borderRadius: '0.5rem', // Ensure the border radius is applied
     }}
   >
-    <h2 className="text-3xl font-bold mb-4 text-white absolute z-10">Service Details</h2>
+    <h2 className="text-3xl font-bold mb-4 text-white absolute z-10">{service.title}</h2>
+  
   </div>
 
   {/* Gray Overlay */}
