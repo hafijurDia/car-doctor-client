@@ -52,7 +52,7 @@ const Navbar = () => {
   <div className="navbar-end">
     {user ? <>
       <div className='flex gap-4 mx-4'>
-      <p>{user.email}</p>
+      <Link to="/my-bookings">My Bookings</Link>
       <button onClick={userLogout}>Logout</button>
       </div>
     </> : <Link to="/login" className='mx-4'>Login</Link>}

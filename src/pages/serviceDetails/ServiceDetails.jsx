@@ -71,7 +71,7 @@ const ServiceDetails = () => {
             <h2 className="text-2xl font-bold">Price ${service.price}</h2>
           </div>
           <div>
-            <Link to='/checkout' className="btn btn-error w-full text-lg text-white hover:bg-black">Proceed Checkout</Link>
+            <Link to={`/booking/${service._id}`} className="btn btn-error w-full text-lg text-white hover:bg-black">Book Service</Link>
           </div>
           </div>
         </div>

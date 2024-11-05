@@ -5,6 +5,9 @@ import Login from "../pages/login/Login";
 import SignUp from "../pages/login/SignUp";
 import Services from "../pages/services/Services";
 import ServiceDetails from "../pages/serviceDetails/ServiceDetails";
+import Booking from "../pages/booking/Booking";
+import BookingList from "../pages/booking/BookingList";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -47,6 +50,15 @@ const router = createBrowserRouter([
       
           return { service, allServices }; // Return both the specific service and all services
       }
+       },
+       {
+        path: "/booking/:id",
+        element: <PrivateRoute><Booking></Booking></PrivateRoute>,
+        loader: async({params})=> await fetch(`http://localhost:5000/services/${params.id}`)
+       },
+       {
+        path: "/my-bookings",
+        element: <PrivateRoute><BookingList></BookingList></PrivateRoute>,
        },
       ]
     },
