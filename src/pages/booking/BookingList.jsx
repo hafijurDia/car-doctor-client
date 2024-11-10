@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const BookingList = () => {
   const { user } = useContext(AuthContext);
@@ -8,26 +9,19 @@ const BookingList = () => {
   const [bookings, setBookings] = useState([]);
   console.log(bookings);
 
+  const url = `http://localhost:5000/bookings?email=${email}`;
   useEffect(() => {
-    const fetchBookings = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:5000/bookings?email=${email}`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch bookings");
-        }
-        const data = await response.json();
-        setBookings(data);
-      } catch (error) {
-        console.error("Error fetching bookings:", error);
-      }
+    const fetchBookings =  () => {
+      axios.get(url, {withCredentials:true})
+        .then(res=>{
+          setBookings(res.data);
+        })
     };
 
-    if (email) {
+    if (url) {
       fetchBookings();
     }
-  }, [email]);
+  }, [url]);
 
   const handleDeleteService = async (bookingId) => {
     // Show SweetAlert confirmation

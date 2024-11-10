@@ -3,6 +3,7 @@ import img from '../../assets/images/login/login.svg';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
 import { toast, ToastContainer } from 'react-toastify';
+import axios from 'axios';
 
 const Login = () => {
     const { userLogin } = useContext(AuthContext);
@@ -21,12 +22,21 @@ const Login = () => {
 
         userLogin(email, password)
             .then((userCredential) => {
-                const user = userCredential.user;
-                console.log(user);
-                toast.success("User login successfully!");
-                form.reset();
+                const loggedInUser = userCredential.user;
+                
+                const user = {email};
                 // Redirect to the original page after login
-                navigate(comefrom, { replace: true });
+               
+                axios.post('http://localhost:5000/jwt', user, {withCredentials:true})
+                .then(res => { 
+                    console.log(res.data);
+                    if (res.data.success) {
+                         navigate(comefrom, { replace: true });
+                         console.log(loggedInUser);
+                        toast.success("User login successfully!");
+                        form.reset();
+                    }
+                })
             })
             .catch((error) => {
                 const errorMessage = error.message;
